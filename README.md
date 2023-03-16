@@ -2,6 +2,7 @@
 
 1. update your ticket status to working on it in Monday
 2. download the repo
+	- remember, you cannot push back to the repo in HTTPS mode
 3. import database to your local setup
 	- if you would like to use your own database you can. Just activate the wp-bootstrap-starter theme
 4. check out a `feature/your_name` branch
