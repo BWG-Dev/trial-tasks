@@ -119,3 +119,13 @@ function is_theme_preset_active() {
         return true;
     }
 }
+
+function register_recipes_post_type () {
+    $args = array (
+        'public' => true,
+        'label' => 'Recipes',
+        'supports' => array ('title', 'editor', 'thumbnail', 'categories',
+    );
+    register_post_type ('recipe', $args);
+}
+add_action ('init', 'register_recipes_post_type');
