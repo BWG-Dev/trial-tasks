@@ -129,3 +129,46 @@ function register_recipes_post_type () {
     register_post_type ('recipe', $args);
 }
 add_action ('init', 'register_recipes_post_type');
+
+/**
+ * Add Custom Taxonomy Into Recipe
+ */
+
+ function register_recipe_category()
+ {
+    $labels = [
+        'name'                       => _x('Recipe Categories', 'Recipe Category General Name', 'wp-bootstrap-starter'),
+        'singular_name'              => _x('Recipe Category', 'Recipe Category Singular Name', 'wp-bootstrap-starter'),
+        'menu_name'                  => __('Recipe Category', 'wp-bootstrap-starter'),
+        'all_items'                  => __('All Items', 'wp-bootstrap-starter'),
+        'parent_item'                => __('Parent Item', 'wp-bootstrap-starter'),
+        'parent_item_colon'          => __('Parent Item:', 'wp-bootstrap-starter'),
+        'new_item_name'              => __('New Item Name', 'wp-bootstrap-starter'),
+        'add_new_item'               => __('Add New Item', 'wp-bootstrap-starter'),
+        'edit_item'                  => __('Edit Item', 'wp-bootstrap-starter'),
+        'update_item'                => __('Update Item', 'wp-bootstrap-starter'),
+        'view_item'                  => __('View Item', 'wp-bootstrap-starter'),
+        'separate_items_with_commas' => __('Separate items with commas', 'wp-bootstrap-starter'),
+        'add_or_remove_items'        => __('Add or remove items', 'wp-bootstrap-starter'),
+        'choose_from_most_used'      => __('Choose from the most used', 'wp-bootstrap-starter'),
+        'popular_items'              => __('Popular Items', 'wp-bootstrap-starter'),
+        'search_items'               => __('Search Items', 'wp-bootstrap-starter'),
+        'not_found'                  => __('Not Found', 'wp-bootstrap-starter'),
+        'no_terms'                   => __('No items', 'wp-bootstrap-starter'),
+        'items_list'                 => __('Items list', 'wp-bootstrap-starter'),
+        'items_list_navigation'      => __('Items list navigation', 'flynt'),
+    ];
+    $args = [
+        'labels'                     => $labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => true,
+    ];
+
+    register_taxonomy('recipe-category', ['recipe'], $args);
+ }
+ 
+ add_action('init', 'register_recipe_category');
