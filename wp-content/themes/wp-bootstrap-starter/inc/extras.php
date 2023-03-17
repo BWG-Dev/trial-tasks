@@ -172,3 +172,74 @@ add_action ('init', 'register_recipes_post_type');
  }
  
  add_action('init', 'register_recipe_category');
+
+ /**
+  * Add Shortcode for 3 recipes block
+  */
+
+function register_three_recipes_block_shortcode($atts){
+    global $post;
+
+    $default = array(
+        'title' => 'Microwave Power-Up!',
+    );
+    $a = shortcode_atts($default, $atts);
+    $output = '<div>';
+        $output .= '<h3 class="text-center">' . $a['title'] . '</h3>';
+        
+
+        $args = array(
+            'post_type' => 'recipe',
+            'posts_per_page' => '3',
+            'order' => 'DESC',
+            'orderby' => 'date'
+        );
+
+        $the_query = new WP_Query( $args );
+
+        $output .= '<div class="row">';
+            if ( $the_query->have_posts() ) {
+                while ( $the_query->have_posts() ) {
+                    $the_query->the_post();
+
+                    $recipe_categories = get_the_terms($post->ID, 'recipe-category');
+
+                    $post_thumbnail_id = get_post_thumbnail_id( $post );
+                    $thumb_url = wp_get_attachment_image_url($post_thumbnail_id, 'full');
+                    $thumb_alt = get_post_meta ( $post_thumbnail_id, '_wp_attachment_image_alt', true );
+
+                    $output .= '<div class="col-lg-4 mt-5 mt-lg-0">';
+                        $output .= '<div class="card">';
+                            if( !empty($post_thumbnail_id) ){
+                                $output .= '<a href="' . get_permalink($post->ID) . '">';
+                                    $output .= '<img class="card-img-top" src="' . $thumb_url . '" alt="' . esc_html ( $thumb_alt ) . '">';
+                                $output .= '</a>';
+                            }
+                            $output .= '<div class="card-body">';
+                                if( !empty($recipe_categories) ){
+                                    $output .= '<p class="card-text">';
+                                    
+                                    foreach($recipe_categories as $index => $item){
+                                        if( $index > 0 ) $output .= ', ';
+                                        $output .= '<a href="' . get_term_link($item->term_id) . '">' . $item->name . '</a>';
+                                    }
+
+                                    $output .= '</p>';
+                                }
+
+                                $output .= '<h5 class="card-title"><a href="' . get_permalink($post->ID) . '">' . $post->post_title . '</a></h5>';
+                            $output .= '</div>';
+                        $output .= '</div>';
+                    $output .= '</div>';
+                }
+            } else {
+                // no posts found
+            }
+        $output .= '</div>';
+
+        wp_reset_postdata();
+    $output .= '</div>';
+
+    return $output;
+}
+add_shortcode('three_recipes_block', 'register_three_recipes_block_shortcode');
