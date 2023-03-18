@@ -14,10 +14,13 @@
 
 get_header(); ?>
 
+<?php echo do_shortcode("[show_recipes]"); ?>
+
 	<section id="primary" class="content-area col-sm-12 col-md-12 col-lg-8">
 		<div id="main" class="site-main" role="main">
 
 		<?php
+
 		if ( have_posts() ) :
 
 			if ( is_home() && ! is_front_page() ) : ?>
