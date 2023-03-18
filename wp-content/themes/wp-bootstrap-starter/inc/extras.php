@@ -134,14 +134,16 @@ add_action ('init', 'register_recipes_post_type');
 function showMyRecipes()
 {
     set_post_thumbnail_size( 250, 250 );
-	$s = "<div class='container'><div class='row'>";
+    $s = "";
+    $s .= "<div class='row'><div class='col-sm-12'><h2>Microwave Power-Up!</h2></div></div>";
+	$s .= "<div class='row'>";
 	$args = array('posts_per_page'=>'3','post_type'=>'recipe');
 	$results = new WP_Query($args);
 	while($results->have_posts()):
 	   $results->the_post();
-	   $s .=  "<div class='col-lg-4'>" . the_post_thumbnail() . "<h5>" . the_category() . "</h5><h2>" . the_title() . "</h2></div>";
+	  $s .=  "<div class='col-lg-3'>" . the_post_thumbnail() . "<br /><h5>" . the_category(' ') . "</h5><br /><h2>" . the_title() . "</h2></div>";
 	endwhile;
-    $s .= "</div></div>";
+    $s .= "</div>";
 	wp_reset_postdata();
 	return $s;
 }
