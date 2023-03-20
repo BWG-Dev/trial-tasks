@@ -130,3 +130,36 @@ function register_recipes_post_type () {
     register_post_type ('recipe', $args);
 }
 add_action ('init', 'register_recipes_post_type');
+
+ // Check if ACF function exists.
+ if( function_exists('acf_register_block_type') ) { 
+	/**
+   * Register TB Blocks
+	 * 
+	 * @author Matt Bonacini
+	 * @since 3.3.6
+   */
+  function tb_register_block() { 
+	/**
+	 * Register Recipes Showcase Block
+	 */
+	acf_register_block_type(array(
+			'name'              => 'tb_show_recipes',
+			'title'             => __('Recipes Showcase', 'wp-bootstrap-starter'),
+			'description'       => __('Displays three recipes.', 'wp-bootstrap-starter'),
+			'render_template'   => 'inc/blocks/tb-show-recipe/tb-show-recipe.php',
+			'category'          => 'text',
+			'icon'              => 'index-card',
+			'keywords'          => array( 'tb', 'recipe'),
+		'enqueue_assets' => function(){
+			wp_enqueue_style( 'tb-recipes-showcase-block', get_stylesheet_directory_uri()  . '/inc/blocks/tb-show-recipe/tb-show-recipe.css', array(), false);
+			},
+		'mode' => 'auto',
+			'supports' => array(
+			'align' => false,
+			),
+ 		));
+	}
+	add_action('acf/init', 'tb_register_block');
+
+ }
