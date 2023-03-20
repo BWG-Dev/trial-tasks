@@ -125,6 +125,7 @@ function register_recipes_post_type () {
         'public' => true,
         'label' => 'Recipes',
         'supports' => array ('title', 'editor', 'thumbnail', 'categories'),
+				'taxonomies' => array ('category'),
     );
     register_post_type ('recipe', $args);
 }
