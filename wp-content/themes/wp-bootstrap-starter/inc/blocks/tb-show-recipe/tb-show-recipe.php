@@ -38,8 +38,10 @@ $section_title = get_field('tb_section_title');
 			?>
 			<article class="tb-single-recipe">
 				<a href="<?php echo $recipe_url; ?>"><?php echo $recipe_image; ?></a>
-				<span><a href="<?php echo $recipe_cat_url; ?>"><?php echo $recipe_cat_name; ?></a></span>
-				<h2><?php echo $recipe_title;?></h2>
+				<div class="tb-recipt-text">
+					<div class="tb-recipe-cat"><a href="<?php echo $recipe_cat_url; ?>"><?php echo $recipe_cat_name; ?></a></div>
+					<h2 class="tb-recipe-title"><?php echo $recipe_title;?></h2>
+				</div>
 			</article>
 			<?php
 			endwhile;
