@@ -124,8 +124,58 @@ function register_recipes_post_type () {
     $args = array (
         'public' => true,
         'label' => 'Recipes',
-        'supports' => array ('title', 'editor', 'thumbnail', 'categories';
+        'supports' => array ( 'title', 'editor', 'thumbnail', 'categories' )
     );
     register_post_type ('recipe', $args);
 }
 add_action ('init', 'register_recipes_post_type');
+
+function bwg_create_recipe_taxonomy() {
+    register_taxonomy(
+        'recipe_category',
+        'recipe',
+        array(
+            'label' => __( 'Recipe Categories' ),
+            'rewrite' => array( 'slug' => 'recipe_category' ),
+            'hierarchical' => true,
+        )
+    );
+}
+add_action( 'init', 'bwg_create_recipe_taxonomy' );
+
+function bwg_display_recipes_shortcode() {
+    $args = array(
+        'post_type' => 'recipe',
+        'posts_per_page' => 3,
+        'orderby' => 'date',
+        'order' => 'DESC'
+    );
+
+    $recipes = new WP_Query( $args );
+    $output = '';
+
+    if ( $recipes->have_posts() ) {
+        $output .= '<div class="recipe-wrapper">';
+        while ( $recipes->have_posts() ) {
+            $recipes->the_post();
+            $output .= '<div class="recipe">';
+            $output .= '<a href="' . get_the_permalink() . '">';
+            $output .= '<div class="recipe-image">' . get_the_post_thumbnail() . '</div>';
+            $output .= '<div class="recipe-category">' . get_the_term_list( get_the_ID(), 'recipe_category', '', ', ', '' ) . '</div>';
+            $output .= '<h3 class="recipe-title">' . get_the_title() . '</h3>';
+            $output .= '</a>';
+            $output .= '</div>';
+        }
+        $output .= '</div>';
+        wp_reset_postdata();
+    }
+
+    return $output;
+}
+add_shortcode( 'bwg_display_recipes', 'bwg_display_recipes_shortcode' );
+
+
+function bwg_enqueue_styles() {
+    wp_enqueue_style( 'bwg_style', get_template_directory_uri() . '/inc/assets/css/style.css' );
+}
+add_action( 'wp_enqueue_scripts', 'bwg_enqueue_styles' );

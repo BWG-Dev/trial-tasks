@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "csso-cli": "^4.0.1",
+    "node-sass": "^8.0.0"
+  },
+  "scripts": {
+    "minify-css": "csso inc/assets/css/style.css inc/assets/css/style.min.css",
+    "scss": "node-sass --watch --include-path scss inc/assets/scss/style.scss inc/assets/css/style.css  --output-style compressed"
+  }
+}

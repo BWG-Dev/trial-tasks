@@ -1,0 +1,45 @@
+/* Style recipe grid in home page */
+#content {
+  background: #f5f6f8;
+}
+
+.recipe-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.recipe {
+  background: white;
+  width: calc(33.33% - 20px);
+  margin-bottom: 40px;
+}
+
+.recipe-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.recipe-title {
+  padding: 0 20px 20px;
+  margin-top: 10px;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.recipe-category {
+  padding: 0 20px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #bd5a2d;
+}
+
+@media screen and (max-width: 767px) {
+  .recipe {
+    width: 100%;
+  }
+}
