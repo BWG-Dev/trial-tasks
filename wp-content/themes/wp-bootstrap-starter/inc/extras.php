@@ -129,3 +129,16 @@ function register_recipes_post_type () {
     register_post_type ('recipe', $args);
 }
 add_action ('init', 'register_recipes_post_type');
+
+function bwg_create_recipe_taxonomy() {
+    register_taxonomy(
+        'recipe_category',
+        'recipe',
+        array(
+            'label' => __( 'Recipe Categories' ),
+            'rewrite' => array( 'slug' => 'recipe_category' ),
+            'hierarchical' => true,
+        )
+    );
+}
+add_action( 'init', 'bwg_create_recipe_taxonomy' );
